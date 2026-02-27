@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import argparse
 import sys
 import os
+import base64
+import io
 from datetime import datetime, time
 import pytz
 
@@ -23,10 +25,11 @@ def get_local_timestamp_str():
     """Formatted timestamp for headers/footers."""
     return get_local_now().strftime("%Y-%m-%d %H:%M %Z")
 
-def generate_bar_chart(df_counts, output_path, title, filter_label, colors=COLOR_PRIMARY):
-    """Generates bar chart with the required timestamp footer."""
+def generate_bar_chart_base64(df_counts, title, filter_label, colors=COLOR_PRIMARY):
+    """Generates a bar chart and returns it as a Base64 encoded string."""
     if df_counts.empty:
-        return False
+        return None
+    
     fig, ax = plt.subplots(figsize=(8, 5))
     bars = ax.bar(df_counts['answer'].astype(str), df_counts['count'], color=colors)
     ax.set_ylabel('Number of Responses')
@@ -37,9 +40,16 @@ def generate_bar_chart(df_counts, output_path, title, filter_label, colors=COLOR
     plt.figtext(0.99, 0.01, timestamp_str, ha='right', va='bottom', fontsize=8, color='gray')
     
     plt.tight_layout()
-    plt.savefig(output_path)
-    plt.close()
-    return True
+    
+    # Save to buffer
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    plt.close(fig)
+    buf.seek(0)
+    
+    # Encode to base64
+    img_str = base64.b64encode(buf.read()).decode('utf-8')
+    return f"data:image/png;base64,{img_str}"
 
 def create_html_table(df_counts):
     """Generates summary tables with percentages."""
@@ -79,7 +89,7 @@ def process_stats(data):
 
 def main():
     # 1. CLI Arguments
-    parser = argparse.ArgumentParser(description="Genete Survey Analysis Dashboard")
+    parser = argparse.ArgumentParser(description="Genete Survey Analysis Dashboard (Standalone HTML)")
     parser.add_argument('--start-date', type=str, help='Filter: Start date (YYYY-MM-DD)')
     parser.add_argument('--end-date', type=str, help='Filter: End date (YYYY-MM-DD)')
     parser.add_argument('--today', action='store_true', help='Filter: Process today only')
@@ -151,17 +161,18 @@ def main():
     adj_now = now_q[now_q['hashed_user_id'].isin(correct_users)]
     f3_stats = process_stats(adj_now[adj_now['answer'].isin(["2002", "1984"])]['answer'])
 
-    # 7. Generate Output
+    # 7. Generate Standalone Output
     analyses = [
-        {"df": f1_stats, "file": "fig1.png", "title": "Overall Choice: 2002 vs 1984", "colors": COLOR_PRIMARY},
-        {"df": f2_stats, "file": "fig2.png", "title": "Knowledge Check: Correct (2009) vs Incorrect", "colors": [COLOR_SUCCESS, COLOR_DANGER]},
-        {"df": f3_stats, "file": "fig3.png", "title": "Adjusted Choice: 2002 vs 1984 (Correct Respondents Only)", "colors": COLOR_SECONDARY}
+        {"df": f1_stats, "title": "Overall Choice: 2002 vs 1984", "colors": COLOR_PRIMARY},
+        {"df": f2_stats, "title": "Knowledge Check: Correct (2009) vs Incorrect", "colors": [COLOR_SUCCESS, COLOR_DANGER]},
+        {"df": f3_stats, "title": "Adjusted Choice: 2002 vs 1984 (Correct Respondents Only)", "colors": COLOR_SECONDARY}
     ]
 
     html_content = f"""
     <!DOCTYPE html>
     <html>
     <head>
+        <meta charset="UTF-8">
         <title>Genete Survey Results</title>
         <style>
             body {{ font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 40px; background-color: #f0f2f5; color: #1c1e21; }}
@@ -186,8 +197,10 @@ def main():
     for item in analyses:
         html_content += f"<div class='section'><h2>{item['title']}</h2>"
         if not item['df'].empty:
-            generate_bar_chart(item['df'], item['file'], item['title'], filter_label, item['colors'])
-            html_content += f"<img src='{item['file']}' alt='{item['title']}'>{create_html_table(item['df'])}"
+            img_b64 = generate_bar_chart_base64(item['df'], item['title'], filter_label, item['colors'])
+            if img_b64:
+                html_content += f"<img src='{img_b64}' alt='{item['title']}'>"
+            html_content += create_html_table(item['df'])
         else:
             html_content += "<p style='color: #888; font-style: italic;'>Inadequate data for this calculation in the selected date range.</p>"
         html_content += "</div>"
@@ -197,7 +210,7 @@ def main():
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    sys.stdout.write(f"Success. Dashboard generated: {OUTPUT_HTML}\n")
+    sys.stdout.write(f"Success. Standalone dashboard generated: {OUTPUT_HTML}\n")
 
 if __name__ == "__main__":
     main()
