@@ -1,0 +1,30 @@
+user_id,step_name,answer,created_at,deployment_name,question_type,question,hashed_user_id,session_id,region
+16462901985,start,fish,2025-06-13 11:31:12.287903-04:00,genetescored,var,What is your name?,35,16462901985_0e9caeb3-edd8-4bd6-81fc-7a584c04ed72_1749828658.4592319,None
+16462901985,start,2009,2025-06-13 11:32:52.270378-04:00,genetescored,mcq,"First question: Which kind of drought year do you think your community would have prefered to get payments?
+1. 2009
+2. 2010",35,16462901985_7a7f5d1f-473e-48e5-b7e2-bb1295a8b2b9_1749828760.0211365,None
+16462901985,deepquestion,2002,2025-06-13 11:33:00.600019-04:00,genetescored,mcq,"Now,  for droughts like happened in the two years below, which kind of drought do you think people would have preferred to get payments?
+1. 1984
+2. 2002",35,16462901985_7a7f5d1f-473e-48e5-b7e2-bb1295a8b2b9_1749828760.0211365,None
+16462901985,end,Genete,2025-06-13 11:34:47.719285-04:00,genetescored,var,Thanks for participating!,35,16462901985_7a7f5d1f-473e-48e5-b7e2-bb1295a8b2b9_1749828760.0211365,None
+16462901985,start,2009,2025-06-13 11:35:16.411309-04:00,genetescored,mcq,"First question: Which kind of drought year do you think your community would have prefered to get payments?
+1. 2009
+2. 2010",35,16462901985_e051140b-54b6-4b61-9015-bcc1457af0c7_1749828905.9374893,None
+16462901985,deepquestion,2002,2025-06-13 11:35:23.212704-04:00,genetescored,mcq,"Now,  for droughts like happened in the two years below, which kind of drought do you think people would have preferred to get payments?
+1. 1984
+2. 2002",35,16462901985_e051140b-54b6-4b61-9015-bcc1457af0c7_1749828905.9374893,None
+16462901985,end,3,2025-06-13 11:35:30.996087-04:00,genetescored,var,Thanks for participating!,35,16462901985_e051140b-54b6-4b61-9015-bcc1457af0c7_1749828905.9374893,None
+16462901985,end,4,2025-06-13 11:35:39.743114-04:00,genetescored,var,Thanks for participating!,35,16462901985_e051140b-54b6-4b61-9015-bcc1457af0c7_1749828905.9374893,None
+16462901985,start,2009,2025-06-13 11:39:21.365205-04:00,genetescored,mcq,"First question: Which kind of drought year do you think your community would have prefered to get payments?
+1. 2009
+2. 2010",35,16462901985_c75ac33e-46b7-4ce4-85ad-ded54d618cbe_1749829150.6962729,None
+16462901985,deepquestion,2002,2025-06-13 11:39:29.089785-04:00,genetescored,mcq,"Now,  for droughts like happened in the two years below, which kind of drought do you think people would have preferred to get payments?
+1. 1984
+2. 2002",35,16462901985_c75ac33e-46b7-4ce4-85ad-ded54d618cbe_1749829150.6962729,None
+16462901985,start,2009,2025-06-13 11:40:26.684977-04:00,genetescored,mcq,"First question: Which kind of drought year do you think your community would have prefered to get payments?
+1. 2009
+2. 2010",35,16462901985_a00dccaa-503f-4c6d-a5e6-220cd0b8333f_1749829216.044224,None
+16462901985,deepquestion,1984,2025-06-13 11:40:33.763365-04:00,genetescored,mcq,"Now,  for droughts like happened in the two years below, which kind of drought do you think people would have preferred to get payments?
+1. 1984
+2. 2002",35,16462901985_a00dccaa-503f-4c6d-a5e6-220cd0b8333f_1749829216.044224,None
+16462901985,$END_SURVEY$,-,2025-06-13 11:40:33.769647-04:00,genetescored,text,Thanks for participating!,35,16462901985_a00dccaa-503f-4c6d-a5e6-220cd0b8333f_1749829216.044224,None
