@@ -4,7 +4,7 @@ import requests
 AUTH_URL = "https://fist-noki.iri.columbia.edu/token"
 DATA_URL = "https://fist-noki.iri.columbia.edu/download_csv"
 # Updated the output filename as requested
-OUTPUT_FILE = "NokiEvacuateOutput.csv"
+OUTPUT_FILE = "NokiGeneteOutput.csv"
 
 # Credentials
 payload = {
@@ -14,7 +14,7 @@ payload = {
 
 # Parameters for the data download
 params = {
-    "deployment_name": "Scored storms"
+    "deployment_name": "genetescored"
 }
 
 def download_noki_data():
