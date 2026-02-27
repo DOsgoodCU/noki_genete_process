@@ -1,36 +1,34 @@
 
 
-# Hurricane Evacuation Analysis
+# Genete Noki Analysis
 
-Tools to process survey data from NokiEvacuateOutput.csv, generate visualizations, and deploy reports.
+**Note that this was adapted from noki_evacuate_process** so there may be accidental remnants of that, which already included some Geneti scripts.
 
-## Local Analysis
-
-Generate plots and the HTML report locally:
-
-python evacuation_analysis.py
-
-### Filtering Arguments
-
-Flag: --today
-Description: Process only today's responses.
-
-Flag: --start "YYYY-MM-DD"
-Description: Filter from a specific start date/time.
-
-Flag: --end "YYYY-MM-DD"
-Description: Filter up to a specific end date/time.
-
-## Deployment
-
-To copy results to ~/Evacuate/docs and deploy via MkDocs:
-
+## command line for class
+python downloadGenete.py
+python processGenete.py --today
 ./deploy_analysis.sh
 
-## Outputs
+## python downloadGenete.py
+Run this first.Hardcoded to download the instance that has the start word Genete, saves to  NokiGeneteOutput.csv
 
-* player_breakdown.png: Distribution of player types.
-* evacuation_overall.png: Total evacuation vs. stay counts.
-* evacuation_by_type.png: Choice breakdown per player type.
-* evacuation_results.html: Combined summary report.
-# noki_evacuate_process
+## python processGenete.py
+Takes NokiGeneteOutput.csv and creates genete_results.html
+  - reports raw preference between 2002 and 1984
+  - reports how many people were right that 2009 was a bad year and 2010 was not
+  - filters answers for only people that got 2009 right and makes an updated plot
+
+Available Options:
+  --start-date YYYY-MM-DD   (Example: --start-date 2025-01-01)
+  --end-date YYYY-MM-DD     (Example: --end-date 2025-12-31)
+  --today                   (Example: --today)
+  --all-responses           (Example: --all-responses) (instead of only most recent response)
+  Defaults: all time, only most recent response
+
+  **for  class, run: python processGenete.py --today**
+  **for demo use, python processGenete.py --all-responses** because not enough responses for meaningful analysis (yet)
+
+## ./deploy_analysis.sh
+Put analysis results, the complete file genete_results.html in the insurepeopleinteractive repo and push to github, once updated
+
+
